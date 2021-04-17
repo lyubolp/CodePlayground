@@ -1,0 +1,7 @@
+[languages]
+  [python3]
+    executable = "/usr/bin/python3"
+    extension = ".py"
+  [cpp]
+    executable = "/usr/bin/gcc"
+    extension = ".cpp"
