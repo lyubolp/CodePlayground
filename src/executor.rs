@@ -18,7 +18,7 @@ pub mod executor{
                 platform
             }
         }
-        pub fn run(&self) -> Result<String, String> {
+        pub fn run(&self) -> Result<(String, String), String> {
             match self.save_code_to_temp_file() {
                 Ok(code_path) => self.run_code(code_path.as_str()),
                 Err(err) => Err(err)
@@ -33,16 +33,16 @@ pub mod executor{
             }
         }
 
-        fn run_code(&self, code_path: &str) -> Result<String, String> {
+        fn run_code(&self, code_path: &str) -> Result<(String, String), String> {
             let executable: &str = self.platform.get_executable();
-
             let output = Command::new(executable)
                 .arg(code_path)
                 .output();
 
             match output {
                 Ok(process) => {
-                    Ok(String::from_utf8(process.stdout).unwrap())
+                    Ok((String::from_utf8(process.stdout).unwrap(),
+                        String::from_utf8(process.stderr).unwrap()))
                 },
                 Err(_) => Err(String::from("Can't execute the code"))
             }
