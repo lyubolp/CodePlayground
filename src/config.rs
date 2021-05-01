@@ -9,28 +9,19 @@ pub mod config {
 
 
     pub fn get_platform_executable(language: &str) -> Result<String, String>{
-        match read_config_file() {
-            Ok(content) => {
-                match content.get(language) {
-                    Some(language_data) => {
-                        match language_data.get("executable") {
-                            Some(path) =>  Ok(String::from(path.as_str().unwrap())),
-                            None => Err(String::from("Could not find executable key"))
-                        }
-                    },
-                    None => Err(String::from("Language not found !"))
-                }
-            },
-            Err(_) => Err(String::from("Unable to read config file"))
-        }
+        get_value_from_category(language, "executable")
     }
 
-    pub fn get_platform_extension(language: &str) -> Result<String, String>{
+    pub fn get_platform_extension(language: &str) -> Result<String, String> {
+        get_value_from_category(language, "extension")
+    }
+
+    fn get_value_from_category(language: &str, key: &str) -> Result<String, String> {
         match read_config_file() {
             Ok(content) => {
                 match content.get(language) {
                     Some(language_data) => {
-                        match language_data.get("executable") {
+                        match language_data.get(key) {
                             Some(path) =>  Ok(String::from(path.as_str().unwrap())),
                             None => Err(String::from("Could not find executable key"))
                         }

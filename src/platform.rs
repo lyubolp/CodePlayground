@@ -1,5 +1,5 @@
 pub mod platform {
-    use crate::config::config::get_platform_executable;
+    use crate::config::config::{get_platform_executable, get_platform_extension};
 
     #[derive(Debug)]
     pub struct Platform {
@@ -23,7 +23,7 @@ pub mod platform {
                 Err(value) => return Err(value)
             };
 
-            let file_extension = match get_platform_executable(name) {
+            let file_extension = match get_platform_extension(name) {
                 Ok(value) => value,
                 Err(value) => return Err(value)
             };
