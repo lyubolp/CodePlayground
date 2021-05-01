@@ -5,7 +5,8 @@ pub mod platform {
     pub struct Platform {
         name: String,
         executable: String,
-        file_extension: String
+        file_extension: String,
+        is_compiled: bool
     }
 
     impl Platform {
@@ -13,7 +14,8 @@ pub mod platform {
             Platform {
                 name: String::from(name),
                 executable: String::from(executable),
-                file_extension: String::from(file_extension)
+                file_extension: String::from(file_extension),
+                is_compiled: false
             }
         }
 
