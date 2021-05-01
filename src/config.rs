@@ -16,20 +16,33 @@ pub mod config {
     }
 
     pub fn get_platform_executable(language: &str) -> Result<String, String>{
-        get_value_from_category(language, "executable")
+        match get_value_from_category(language, "executable") {
+            Ok(value) => Ok(String::from(value.as_str().unwrap())),
+            Err(error) => Err(error)
+        }
     }
 
     pub fn get_platform_extension(language: &str) -> Result<String, String> {
-        get_value_from_category(language, "extension")
+        match get_value_from_category(language, "executable") {
+            Ok(value) => Ok(String::from(value.as_str().unwrap())),
+            Err(error) => Err(error)
+        }
     }
 
-    fn get_value_from_category(language: &str, key: &str) -> Result<String, String> {
+    pub fn get_platform_is_compiled(language: &str) -> Result<bool, String> {
+        match get_value_from_category(language, "executable") {
+            Ok(value) => Ok(value.as_bool().unwrap()),
+            Err(error) => Err(error)
+        }
+    }
+
+    fn get_value_from_category(language: &str, key: &str) -> Result<&Value, String> {
         match read_config_file() {
             Ok(content) => {
                 match content.get(language) {
                     Some(language_data) => {
                         match language_data.get(key) {
-                            Some(path) =>  Ok(String::from(path.as_str().unwrap())),
+                            Some(path) =>  Ok(path),
                             None => Err(String::from("Could not find executable key"))
                         }
                     },
