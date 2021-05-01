@@ -7,6 +7,13 @@ pub mod config {
 
     static CONFIG_PATH: &str = "config.toml";
 
+    pub fn get_work_dir() -> Result<String, String> {
+        match read_config_file() {
+            //TODO - This is not okay, but works for now
+            Ok(content) => Ok(String::from(content["config"]["work_dir"].as_str().unwrap())),
+            Err(_) => Err(String::from("Can't open config file"))
+        }
+    }
 
     pub fn get_platform_executable(language: &str) -> Result<String, String>{
         get_value_from_category(language, "executable")
@@ -39,7 +46,4 @@ pub mod config {
 
         config_content.as_str().parse::<Value>()
     }
-
-
-
 }
