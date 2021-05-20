@@ -1,21 +1,28 @@
 pub mod platform {
-    use crate::config::config::{get_platform_executable, get_platform_extension};
+    use crate::config::config::{get_platform_executable, get_platform_extension, get_platform_is_compiled};
+    use crate::program_output::program_output::ProgramOutput;
+
+    pub trait Language {
+        fn from_config(name: &str) -> Self;
+        fn get_language_information(&self) -> LanguageInformation;
+        fn run(&self) -> Result<ProgramOutput, String>;
+    }
 
     #[derive(Debug)]
-    pub struct Platform {
+    pub struct LanguageInformation {
         name: String,
         executable: String,
         file_extension: String,
         is_compiled: bool
     }
 
-    impl Platform {
-        pub fn new(name: &str, executable: &str, file_extension: &str) -> Self {
-            Platform {
+    impl LanguageInformation {
+        pub fn new(name: &str, executable: &str, file_extension: &str, is_compiled: bool) -> Self {
+            LanguageInformation {
                 name: String::from(name),
                 executable: String::from(executable),
                 file_extension: String::from(file_extension),
-                is_compiled: false
+                is_compiled
             }
         }
 
@@ -29,10 +36,17 @@ pub mod platform {
                 Ok(value) => value,
                 Err(value) => return Err(value)
             };
-            Result::Ok(Platform {
+
+            let is_compiled = match get_platform_is_compiled(name) {
+                Ok(value) => value,
+                Err(value) => return Err(value)
+            };
+
+            Result::Ok(LanguageInformation {
                 name: String::from(name),
                 executable,
-                file_extension
+                file_extension,
+                is_compiled
             })
         }
 
@@ -46,6 +60,10 @@ pub mod platform {
 
         pub fn get_file_extension(&self) -> &str {
             self.file_extension.as_str()
+        }
+
+        pub fn get_is_compiled(&self) -> bool {
+            self.is_compiled
         }
     }
 }
