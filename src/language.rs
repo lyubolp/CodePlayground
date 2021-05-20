@@ -1,14 +1,14 @@
-pub mod platform {
+pub mod language {
     use crate::config::config::{get_platform_executable, get_platform_extension, get_platform_is_compiled};
     use crate::program_output::program_output::ProgramOutput;
 
     pub trait Language {
-        fn from_config(name: &str) -> Self;
-        fn get_language_information(&self) -> LanguageInformation;
-        fn run(&self) -> Result<ProgramOutput, String>;
+        fn from_config(name: &str) -> Result<Self, String> where Self: Sized;
+        fn get_language_information(&self) -> &LanguageInformation;
+        fn run(&self, code_path: &str) -> Result<ProgramOutput, String>;
     }
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     pub struct LanguageInformation {
         name: String,
         executable: String,
