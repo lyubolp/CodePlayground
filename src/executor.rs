@@ -1,26 +1,26 @@
 pub mod executor{
-    use std::fs::{read_to_string, File};
-    use crate::platform::platform::Platform;
+    use crate::language::language::{Language};
     use std::fs;
-    use std::io::Error;
-    use std::process::{Command, Output};
-    use crate::config::config::{get_work_dir, get_platform_extension};
+    use std::process::{Command};
+    use crate::config::config::{get_work_dir};
+    use crate::program_output::program_output::ProgramOutput;
+
 
     pub struct Executor {
         code: String,
-        platform: Platform
+        language: Box<dyn Language>
     }
 
     impl Executor {
-        pub fn new(code: &str, platform: Platform) -> Self {
+        pub fn new(code: &str, platform: Box<dyn Language>) -> Self {
             Executor {
                 code: String::from(code),
-                platform
+                language: platform
             }
         }
-        pub fn run(&self) -> Result<(String, String), String> {
+        pub fn run(&self) -> Result<ProgramOutput, String> {
             match self.save_code_to_temp_file() {
-                Ok(code_path) => self.run_code(code_path.as_str()),
+                Ok(code_path) => self.language.run(code_path.as_str()),
                 Err(err) => Err(err)
             }
         }
@@ -33,24 +33,10 @@ pub mod executor{
             }
         }
 
-        fn run_code(&self, code_path: &str) -> Result<(String, String), String> {
-            let executable: &str = self.platform.get_executable();
-            let output = Command::new(executable)
-                .arg(code_path)
-                .output();
-
-            match output {
-                Ok(process) => {
-                    Ok((String::from_utf8(process.stdout).unwrap(),
-                        String::from_utf8(process.stderr).unwrap()))
-                },
-                Err(_) => Err(String::from("Can't execute the code"))
-            }
-        }
-
+        
         fn generate_filename(&self) -> String {
             let mut result = String::from("/code");
-            result.push_str(self.platform.get_file_extension());
+            result.push_str(self.language.get_language_information().get_file_extension());
             result
         }
     }
