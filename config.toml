@@ -7,5 +7,6 @@
     executable = "/usr/bin/g++"
     compiled = true
     extension = ".cpp"
+    run = "./a.out"
 [config]
   work_dir = "/tmp/CodePlayground"
