@@ -1,6 +1,21 @@
 pub mod language {
     use crate::config::config::{get_platform_executable, get_platform_extension, get_platform_is_compiled};
     use crate::program_output::program_output::ProgramOutput;
+    use std::process::Command;
+
+    pub fn execute_command(command: &str, args: Vec<&str>) -> Result<ProgramOutput, String> {
+        let output = Command::new(command)
+            .args(args)
+            .output();
+
+        match output {
+            Ok(process) => {
+                //TODO - Added exit code to the struct
+                Ok(ProgramOutput::new(process.stdout, process.stderr, 0))
+            },
+            Err(_) => Err(String::from("Can't execute the command"))
+        }
+    }
 
     pub trait Language {
         fn from_config(name: &str) -> Result<Self, String> where Self: Sized;
