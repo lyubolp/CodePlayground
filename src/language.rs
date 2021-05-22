@@ -32,15 +32,6 @@ pub mod language {
     }
 
     impl LanguageInformation {
-        pub fn new(name: &str, executable: &str, file_extension: &str, is_compiled: bool) -> Self {
-            LanguageInformation {
-                name: String::from(name),
-                executable: String::from(executable),
-                file_extension: String::from(file_extension),
-                is_compiled
-            }
-        }
-
         pub fn from_config(name: &str) -> Result<Self, String> {
             let executable: String = match get_platform_executable(name) {
                 Ok(value) => value,

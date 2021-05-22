@@ -2,7 +2,6 @@ pub mod python {
     use crate::language::language::{LanguageInformation, Language, execute_command};
     use crate::interpreted_language::interpreted_language::InterpretedLanguage;
     use crate::program_output::program_output::ProgramOutput;
-    use std::process::Command;
 
     pub struct Python{
         info: LanguageInformation
