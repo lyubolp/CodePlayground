@@ -18,7 +18,7 @@ pub mod language {
     }
 
     pub trait Language {
-        fn from_config(name: &str) -> Result<Self, String> where Self: Sized;
+        fn from_config() -> Result<Self, String> where Self: Sized;
         fn get_language_information(&self) -> &LanguageInformation;
         fn run(&self, code_path: &str) -> Result<ProgramOutput, String>;
     }
