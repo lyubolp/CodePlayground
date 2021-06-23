@@ -83,7 +83,7 @@ pub mod ui {
     //         //self.output_field.get_buffer().unwrap().set_text(program_output.get_stdout().as_str());
     //     }
     // }
-    pub fn draw_ui() {
+    pub fn draw_ui(executor: Executor) {
         if gtk::init().is_err() {
             panic!("Failed to initialize GTK.");
         }
@@ -99,7 +99,6 @@ pub mod ui {
 
 
         run_button.connect_activate(move |_| {
-            let mut executor: Executor = Executor::new("", Box::new(python::python::Python::from_config().unwrap()));
             let input_buffer = input_field.get_buffer().unwrap();
 
             let input_string: String = input_buffer.get_text(&input_buffer.get_start_iter(),
@@ -110,11 +109,8 @@ pub mod ui {
 
             println!("text in the input: {}", input_string);
 
-            executor.update_code(input_string.as_str());
-
             let program_output: ProgramOutput = executor
-                .update_code(input_string.as_str())
-                .run()
+                .run(input_string)
                 .unwrap();
 
             println!("stdout: {}\nstderr:{}", program_output.get_stdout(), program_output.get_stderr());
