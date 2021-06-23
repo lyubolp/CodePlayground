@@ -24,6 +24,13 @@ pub mod executor{
             }
         }
 
+        pub fn update_code(& mut self, new_code: &str) -> &Self {
+            if self.code != new_code {
+                self.code = String::from(new_code)
+            }
+            self
+        }
+
         fn save_code_to_temp_file(&self) -> Result<String, String> {
             let code_file_path: String = String::from(get_work_dir().unwrap() + self.generate_filename().as_str());
             match fs::write(code_file_path.clone(), self.code.clone()) {
