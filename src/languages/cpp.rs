@@ -10,8 +10,8 @@ pub mod cpp {
     }
 
     impl Language for Cpp {
-        fn from_config(name: &str) -> Result<Self, String> where Self: Sized {
-            let language_info_from_config: Result<LanguageInformation, String> = LanguageInformation::from_config(name);
+        fn from_config() -> Result<Self, String> where Self: Sized {
+            let language_info_from_config: Result<LanguageInformation, String> = LanguageInformation::from_config("cpp");
 
             let executable_path: String = get_work_dir().unwrap() + "/a.out";
             return match language_info_from_config {

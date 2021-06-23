@@ -8,8 +8,8 @@ pub mod python {
     }
 
     impl Language for Python {
-        fn from_config(name: &str) -> Result<Self, String> where Self: Sized {
-            let language_info_from_config: Result<LanguageInformation, String> = LanguageInformation::from_config(name);
+        fn from_config() -> Result<Self, String> where Self: Sized {
+            let language_info_from_config: Result<LanguageInformation, String> = LanguageInformation::from_config("python3");
 
             return match language_info_from_config {
                 Ok(info) => Ok(Python{ info }),
