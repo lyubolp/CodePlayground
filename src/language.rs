@@ -10,8 +10,10 @@ pub mod language {
 
         match output {
             Ok(process) => {
-                //TODO - Added exit code to the struct
-                Ok(ProgramOutput::new(process.stdout, process.stderr, 0))
+                match process.status.code() {
+                    Some(exit_code) => Ok(ProgramOutput::new(process.stdout, process.stderr, exit_code)),
+                    None => Err(String::from("Process has been terminated by a signal"))
+                }
             },
             Err(_) => Err(String::from("Can't execute the command"))
         }

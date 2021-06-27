@@ -3,11 +3,11 @@ pub mod program_output {
     pub struct ProgramOutput{
         stdout: String,
         stderr: String,
-        exit_code: u32
+        exit_code: i32
     }
 
     impl ProgramOutput {
-        pub fn new(out: Vec<u8>, err: Vec<u8>, exit_code: u32) -> ProgramOutput{
+        pub fn new(out: Vec<u8>, err: Vec<u8>, exit_code: i32) -> ProgramOutput{
             ProgramOutput {
                 stdout: String::from_utf8(out).unwrap(),
                 stderr: String::from_utf8(err).unwrap(),
@@ -23,7 +23,7 @@ pub mod program_output {
             self.stderr.clone()
         }
 
-        pub fn get_exit_code(&self) -> u32 {
+        pub fn get_exit_code(&self) -> i32 {
             self.exit_code
         }
     }

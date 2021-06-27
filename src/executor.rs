@@ -10,7 +10,7 @@ pub mod executor{
     }
 
     impl Executor {
-        pub fn new(code: &str, platform: Box<dyn Language>) -> Self {
+        pub fn new(platform: Box<dyn Language>) -> Self {
             Executor {
                 language: platform
             }
