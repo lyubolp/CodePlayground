@@ -1,0 +1,18 @@
+{
+    "languages": {
+        "python3": {
+            "executable": "/usr/bin/python3",
+            "compiled": false,
+            "extension": ".py"
+        },
+        "cpp": {
+            "executable": "/usr/bin/g++",
+            "compiled": true,
+            "extension": ".cpp",
+            "run": "./a.out"
+        }
+    },
+    "config": {
+        "work_dir": "/tmp/CodePlayground"
+    }
+}
