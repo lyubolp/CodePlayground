@@ -1,0 +1,7 @@
+[MASTER]
+
+# Ignore TODO comments
+disable=W0511 
+
+# Ignore "use implicit boolianess of objects" warning
+disable=C1803
