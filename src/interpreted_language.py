@@ -1,6 +1,10 @@
-from abc import ABC
-
+"""
+Module containing the InterpretedLanguage interface.
+"""
 from src.language import Language
 
+
 class InterpretedLanguage(Language):
-    pass
+    """
+    Interface for interpreted languages.
+    """
