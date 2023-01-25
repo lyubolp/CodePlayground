@@ -3,7 +3,7 @@ from abc import ABC
 from typing import Generic, TypeVar, Union
 
 T = TypeVar("T")
-E = TypeVar("E", bound=Exception)
+E = TypeVar("E")
 
 
 class BaseResult(ABC, Generic[T, E]):
@@ -13,6 +13,12 @@ class BaseResult(ABC, Generic[T, E]):
         self._is_ok: bool = is_ok
 
     def __bool__(self) -> bool:
+        return self._is_ok
+
+    def is_ok(self) -> bool:
+        """
+        Returns true if the result is Ok.
+        """
         return self._is_ok
 
 
