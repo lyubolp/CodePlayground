@@ -22,7 +22,7 @@ class Executor:
         """
         save_code_result = self.__save_code_to_temp_file(code)
         if not save_code_result:
-            return Error(save_code_result.error())
+            return Error(save_code_result.value())
 
         return self.__language.run(save_code_result.value())
 
@@ -34,7 +34,12 @@ class Executor:
         return self.__language
 
     def __save_code_to_temp_file(self, code: str) -> Result[str, str]:
-        full_path = os.path.join(Config().work_dir, self.__generate_file_name())
+        work_dir = Config().get_item('work_dir')
+
+        if not work_dir:
+            return Error(work_dir.value())
+
+        full_path = os.path.join(work_dir.value(), self.__generate_file_name())
 
         try:
             with open(full_path, 'w', encoding='utf-8') as file_descriptor:
