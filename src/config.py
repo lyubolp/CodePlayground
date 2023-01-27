@@ -6,7 +6,7 @@ import os
 
 from typing import Any, Dict, Optional
 
-from src.language import LanguageInformation
+from src.language_information import LanguageInformation
 from src.result import Result, Ok, Error
 
 
@@ -26,8 +26,27 @@ class Config:
             with open(file_path, 'r', encoding='utf-8') as file_handler:
                 cls.__config = json.load(file_handler)
 
-    def __getattribute__(self, __name: str) -> Any:
-        return self.__config[__name]
+    @classmethod
+    def reset_config(cls) -> None:
+        """
+        Reset the config to an empty dictionary.
+        """
+        cls.__config = {}
+
+    def get_item(self, key: str) -> Result[Any, str]:
+        """
+        Get an item from the config.
+
+        :param key: The key to get the value for.
+        :return: The value or an error.
+        """
+        if self.__config == {}:
+            return Error('Config is not loaded')
+
+        if key not in self.__config:
+            return Error('Key not found')
+
+        return Ok(self.__config[key])
 
     def create_language_information(self, language: str) -> Result[LanguageInformation, str]:
         """
