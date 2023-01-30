@@ -2,9 +2,9 @@
 Module containing the interface for compiled languages
 """
 from abc import abstractmethod
+from subprocess import CompletedProcess
 
 from src.language import Language
-from src.program_output import ProgramOutput
 from src.result import Result
 
 
@@ -13,7 +13,7 @@ class CompiledLanguage(Language):
     Interface for compiled languages
     """
     @abstractmethod
-    def compile(self, code_path: str) -> Result[ProgramOutput, str]:
+    def compile(self, code_path: str) -> Result[CompletedProcess, str]:
         """
         Compiles the code at the given path
 

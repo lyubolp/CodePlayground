@@ -3,9 +3,10 @@ Module containing the Executor class.
 """
 import os
 
+from subprocess import CompletedProcess
+
 from src.config import Config
 from src.language import Language
-from src.program_output import ProgramOutput
 from src.result import Result, Ok, Error
 
 
@@ -16,7 +17,7 @@ class Executor:
     def __init__(self, language: Language) -> None:
         self.__language = language
 
-    def run(self, code: str) -> Result[ProgramOutput, str]:
+    def run(self, code: str) -> Result[CompletedProcess, str]:
         """
         Run a give piece of code in a given language.
         """
