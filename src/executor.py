@@ -34,7 +34,7 @@ class Executor:
     def __save_code_to_temp_file(self, code: str) -> str:
         work_dir = Config().get_item('work_dir')
 
-        full_path = os.path.join(work_dir.value(), self.__generate_file_name())
+        full_path = os.path.join(work_dir, self.__generate_file_name())
 
         with open(full_path, 'w', encoding='utf-8') as file_descriptor:
             file_descriptor.write(code)
