@@ -3,14 +3,12 @@ Module containing all the abstractions around languages.
 """
 import subprocess
 
-from abc import ABC, abstractmethod, abstractclassmethod
+from abc import ABC, abstractmethod
 from typing import List
 
 from subprocess import CompletedProcess
 
-from src.config import Config
 from src.language_information import LanguageInformation
-from src.program_output import ProgramOutput
 from src.result import Ok, Error, Result
 
 
