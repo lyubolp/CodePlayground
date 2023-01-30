@@ -50,7 +50,7 @@ class TestConfig(unittest.TestCase):
 
     def test_02_initialize_without_file(self):
         """
-        Verify that the config is not loaded 
+        Verify that the config is not loaded
             when no path is passed when initially the Config is instanced
         """
         # Act
