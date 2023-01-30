@@ -9,23 +9,19 @@ from typing import List
 from subprocess import CompletedProcess
 
 from src.language_information import LanguageInformation
-from src.result import Ok, Error, Result
 
 
-def execute_command(command: str, args: List[str]) -> Result[CompletedProcess, str]:
+def execute_command(command: str, args: List[str]) -> CompletedProcess:
     """
     Execute a command with the given arguments.
     """
-    try:
-        result = subprocess.run([command, *args],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE,
-                                encoding="utf-8",
-                                check=True)
-    except subprocess.CalledProcessError as exception:
-        return Error(exception.stderr)
+    result = subprocess.run([command, *args],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE,
+                            encoding="utf-8",
+                            check=True)
 
-    return Ok(result)
+    return result
 
 
 class Language(ABC):
@@ -40,7 +36,7 @@ class Language(ABC):
         """
 
     @abstractmethod
-    def run(self, code_path: str) -> Result[CompletedProcess, str]:
+    def run(self, code_path: str) -> CompletedProcess:
         """
         Run the given code.
         """

@@ -5,7 +5,6 @@ from abc import abstractmethod
 from subprocess import CompletedProcess
 
 from src.language import Language
-from src.result import Result
 
 
 class CompiledLanguage(Language):
@@ -13,7 +12,7 @@ class CompiledLanguage(Language):
     Interface for compiled languages
     """
     @abstractmethod
-    def compile(self, code_path: str) -> Result[CompletedProcess, str]:
+    def compile(self, code_path: str) -> CompletedProcess:
         """
         Compiles the code at the given path
 
