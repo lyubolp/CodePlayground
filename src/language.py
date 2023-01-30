@@ -3,8 +3,10 @@ Module containing all the abstractions around languages.
 """
 import subprocess
 
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractclassmethod
 from typing import List
+
+from subprocess import CompletedProcess
 
 from src.config import Config
 from src.language_information import LanguageInformation
@@ -12,7 +14,7 @@ from src.program_output import ProgramOutput
 from src.result import Ok, Error, Result
 
 
-def execute_command(command: str, args: List[str]) -> Result:
+def execute_command(command: str, args: List[str]) -> Result[CompletedProcess, str]:
     """
     Execute a command with the given arguments.
     """
@@ -25,19 +27,13 @@ def execute_command(command: str, args: List[str]) -> Result:
     except subprocess.CalledProcessError as exception:
         return Error(exception.stderr)
 
-    return Ok(result.stdout)
+    return Ok(result)
+
 
 class Language(ABC):
     """
     Abstract class for a language.
     """
-
-    @abstractmethod
-    @classmethod
-    def from_config(cls, config: Config):
-        """
-        Create a language from the config.
-        """
 
     @abstractmethod
     def get_language_information(self) -> LanguageInformation:
@@ -46,7 +42,7 @@ class Language(ABC):
         """
 
     @abstractmethod
-    def run(self, code_path: str) -> Result[ProgramOutput, str]:
+    def run(self, code_path: str) -> Result[CompletedProcess, str]:
         """
         Run the given code.
         """
