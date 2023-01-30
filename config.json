@@ -9,7 +9,7 @@
             "executable": "/usr/bin/g++",
             "compiled": true,
             "extension": ".cpp",
-            "run": "./a.out"
+            "run": "a.out"
         }
     },
     
