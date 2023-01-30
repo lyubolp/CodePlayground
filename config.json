@@ -12,7 +12,6 @@
             "run": "./a.out"
         }
     },
-    "config": {
-        "work_dir": "/tmp/CodePlayground"
-    }
+    
+    "work_dir": "/tmp/CodePlayground"
 }
