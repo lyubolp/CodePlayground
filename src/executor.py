@@ -50,4 +50,6 @@ class Executor:
         return Ok(full_path)
 
     def __generate_file_name(self) -> str:
-        return os.path.join('code', self.__language.get_language_information().file_extension)
+        file_extension = self.__language.get_language_information().file_extension
+
+        return 'code' + file_extension
